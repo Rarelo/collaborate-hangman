@@ -9,12 +9,26 @@ def display_guessed_characters(character_list):
         print("Guessed characters: "+ character_list[1])
 
 
-def game_display_round(display_string,character_list,guesses_left):
+def game_display_round(display_string,character_list,guesses_left): #doesn't take display string
     '''prints the interface shown between guesses'''
     print()
-    print("Word: " + display_string)
+    #print(display_string,'here')
+    try:
+        print("Word: " + display_string)
+    except:
+        display_string = display_string[0]
+        try:
+            print("Word: " + display_string)
+        except:
+            display_string = display_string[0]
+            try:
+                print("Word: " + display_string)
+            except:
+                display_string = display_string[0]
+                print("Word: " + display_string)
     display_guessed_characters(character_list)
     print("Guesses left: " +str(guesses_left))
+    return display_string
 
 ### player guessing
 
@@ -54,7 +68,7 @@ def guess_a_character(character_list):
 def mutate_game_variabels(current_word,display_string,character_list,guesses_left,letter):
     '''checks if the players input is in the current_word and acts accordingly'''
     character_list = regenerate_character_list(character_list,letter)
-    display_string = handle_display_string(current_word,display_string,letter,guesses_left)
+    display_string,guesses_left = handle_display_string(current_word,display_string,letter,guesses_left)
     return display_string,character_list,guesses_left
     #display string
 
@@ -74,7 +88,7 @@ def handle_display_string(current_word,display_string,letter,guesses_left):
         #selected letter not in the string
         #display_string does not need to be changed
         guesses_left = guesses_left -1
-    return display_string
+    return display_string,guesses_left
 
 def mutate_string(position_in_string,string,character_to_replace):
     '''mutates and returns a string because apparently assignment isn't a thing'''
